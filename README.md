@@ -315,7 +315,7 @@ Through this project, I gained practical experience in:
 
 # 👨‍💻 Author
 
-**Roshan RHN**
+**Pathmanathan Niroshan**
 
 Software Engineering Student
 
