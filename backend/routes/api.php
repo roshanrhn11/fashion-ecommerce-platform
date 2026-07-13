@@ -19,12 +19,14 @@ use App\Http\Controllers\API\OrderController;
 Route::get('/products', [ProductController::class, 'index']);
 
 Route::post('/products/store', [ProductController::class, 'store']);
-Route::put('/products/{id}/update',
-[ProductController::class,'update']);
 
+Route::put('/products/{id}/update',
+    [ProductController::class,'update']
+);
 
 Route::delete('/products/{id}/delete',
-[ProductController::class,'destroy']);
+    [ProductController::class,'destroy']
+);
 
 
 
@@ -37,19 +39,17 @@ Route::delete('/products/{id}/delete',
 
 // Register
 
-Route::post('/register', function (Request $request) {
-
+Route::post('/register', function(Request $request){
 
     $request->validate([
 
-        'name' => 'required',
+        'name'=>'required',
 
-        'email' => 'required|email|unique:users',
+        'email'=>'required|email|unique:users',
 
-        'password' => 'required|min:6',
+        'password'=>'required|min:6',
 
     ]);
-
 
 
     $user = User::create([
@@ -65,9 +65,7 @@ Route::post('/register', function (Request $request) {
     ]);
 
 
-
     $token = $user->createToken('react_token')->plainTextToken;
-
 
 
     return response()->json([
@@ -109,14 +107,28 @@ Route::post('/login', function(Request $request){
 
 
 
-    if(!$user || !Hash::check($request->password,$user->password)){
+    if(!$user){
+
+        return response()->json([
+
+            'status'=>false,
+
+            'message'=>'User not found'
+
+        ],401);
+
+    }
+
+
+
+    if(!Hash::check($request->password,$user->password)){
 
 
         return response()->json([
 
             'status'=>false,
 
-            'message'=>'Invalid email or password'
+            'message'=>'Wrong password'
 
         ],401);
 
@@ -150,67 +162,45 @@ Route::post('/login', function(Request $request){
 
 /*
 |--------------------------------------------------------------------------
-| Protected Routes
+| Order Routes
 |--------------------------------------------------------------------------
 */
+
+
+Route::post('/orders',
+    [OrderController::class,'store']
+);
+
 
 
 Route::middleware('auth:sanctum')->group(function(){
 
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Customer Orders
-    |--------------------------------------------------------------------------
-    */
-
-
-    Route::post('/orders',
-    [OrderController::class,'store']);
-
-
+    // Customer Orders
 
     Route::get('/my-orders',
-    [OrderController::class,'myOrders']);
+        [OrderController::class,'myOrders']
+    );
 
-
-
-    // Customer cancel order
 
     Route::post('/my-orders/{id}/cancel',
-    [OrderController::class,'cancelOrder']);
+        [OrderController::class,'cancelOrder']
+    );
 
 
 
-
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Admin Order Management
-    |--------------------------------------------------------------------------
-    */
-
+    // Admin Order Management
 
     Route::post('/admin/orders/{id}/status',
-    [OrderController::class,'updateStatus']);
+        [OrderController::class,'updateStatus']
+    );
 
 
 
-
-
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | User
-    |--------------------------------------------------------------------------
-    */
-
+    // Current User
 
     Route::get('/user',function(Request $request){
-
 
         return response()->json([
 
@@ -218,29 +208,17 @@ Route::middleware('auth:sanctum')->group(function(){
 
         ]);
 
-
     });
 
 
 
-
-
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Logout
-    |--------------------------------------------------------------------------
-    */
-
+    // Logout
 
     Route::post('/logout',function(Request $request){
-
 
         $request->user()
         ->currentAccessToken()
         ->delete();
-
 
 
         return response()->json([
@@ -250,7 +228,6 @@ Route::middleware('auth:sanctum')->group(function(){
             'message'=>'Logout successful'
 
         ]);
-
 
     });
 

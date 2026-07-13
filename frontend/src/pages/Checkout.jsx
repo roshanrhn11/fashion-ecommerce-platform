@@ -146,9 +146,11 @@ function Checkout() {
   catch(error){
 
 
+ console.log("ORDER ERROR FULL:", error);
+
     console.log(
-      "ORDER ERROR:",
-      error.response?.data
+        "SERVER RESPONSE:",
+        error.response?.data
     );
 
 
