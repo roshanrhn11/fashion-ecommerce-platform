@@ -23,21 +23,16 @@ function Cart() {
   const handleCheckout = () => {
 
 
-    if(user){
-
+    if (user) {
 
       navigate("/checkout");
 
-
-    }
-    else{
-
+    } 
+    else {
 
       navigate("/login");
 
-
     }
-
 
   };
 
@@ -77,8 +72,9 @@ function Cart() {
               <div className="lg:col-span-2 space-y-4">
 
 
+
                 {
-                  cart.map((item)=>(
+                  cart.map((item) => (
 
 
                     <div
@@ -98,9 +94,14 @@ function Cart() {
                         <div className="w-16 h-16 bg-[#111113] rounded-lg overflow-hidden">
 
 
+
                           <img
 
-                            src={`${storageBaseURL}${item.image}`}
+                            src={
+                              item.image?.startsWith("http")
+                                ? item.image
+                                : `${storageBaseURL}${item.image}`
+                            }
 
                             alt={item.name}
 
@@ -109,7 +110,9 @@ function Cart() {
                           />
 
 
+
                         </div>
+
 
 
 
@@ -125,11 +128,14 @@ function Cart() {
 
 
 
+
                           <span className="text-[10px] text-gray-500 block mt-1">
 
                             Qty: {item.quantity}
 
                           </span>
+
+
 
 
 
@@ -153,7 +159,8 @@ function Cart() {
                       <button
 
 
-                        onClick={()=>removeFromCart(item.id)}
+                        onClick={() => removeFromCart(item.id)}
+
 
                         className="text-xs text-rose-500 hover:text-rose-400 uppercase font-bold tracking-widest"
 
@@ -164,6 +171,7 @@ function Cart() {
 
 
                       </button>
+
 
 
 
@@ -181,10 +189,12 @@ function Cart() {
 
 
 
+
                 <button
 
 
                   onClick={clearCart}
+
 
                   className="text-[10px] text-gray-500 hover:text-white uppercase font-bold tracking-widest mt-3 block ml-auto"
 
@@ -216,11 +226,14 @@ function Cart() {
               <div className="bg-[#0D0D0F] border border-[#141416] p-6 rounded-xl">
 
 
+
                 <h2 className="text-xs font-bold uppercase tracking-widest mb-6 text-gray-400">
 
                   Order Summary
 
                 </h2>
+
+
 
 
 
@@ -243,15 +256,14 @@ function Cart() {
 
                     <span className="text-white">
 
-
                       LKR {cartTotal.toLocaleString()}
-
 
                     </span>
 
 
 
                   </div>
+
 
 
 
@@ -271,19 +283,18 @@ function Cart() {
 
                     <span className="text-gray-500">
 
-
                       Confirm later
 
-
                     </span>
+
 
 
                   </div>
 
 
 
-
                 </div>
+
 
 
 
@@ -330,11 +341,11 @@ function Cart() {
 
                 >
 
-
                   Proceed To Checkout
 
 
                 </button>
+
 
 
 
@@ -362,7 +373,11 @@ function Cart() {
 
 
 
+
+
               </div>
+
+
 
 
 
@@ -379,6 +394,7 @@ function Cart() {
           :
 
 
+
           (
 
 
@@ -393,6 +409,7 @@ function Cart() {
 
 
               </p>
+
 
 
 
@@ -423,8 +440,8 @@ function Cart() {
 
           )
 
-
         }
+
 
 
 
