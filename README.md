@@ -1,26 +1,38 @@
-# 🛍️ StyleCart - Fashion E-Commerce Platform
+# 🛍️ StyleCart - Full Stack Fashion E-Commerce Platform
 
-A modern full-stack fashion e-commerce platform built with **Laravel 12, React, MySQL, REST APIs, and Sanctum Authentication**.
+A modern full-stack fashion e-commerce platform built with **Laravel 12, React.js, MySQL, REST APIs, and Laravel Sanctum Authentication**.
 
-StyleCart provides a complete online shopping experience with customer authentication, product management, shopping cart, checkout workflow, order management, and admin control features.
+StyleCart provides a complete online shopping experience with customer authentication, product management, shopping cart, checkout workflow, order processing, and admin management features.
 
 ---
 
 # 📌 Project Overview
 
-StyleCart is a full-stack e-commerce application designed for fashion businesses to manage products, customers, and online orders.
+StyleCart is a full-stack e-commerce web application designed for fashion businesses to manage products, customers, and online orders through a modern digital shopping platform.
 
-The system contains:
+The system provides:
 
-- Customer shopping interface
-- Secure authentication system
-- Product catalogue management
-- Shopping cart functionality
-- Checkout and order processing
-- Admin dashboard
-- Order management workflow
+* Customer shopping interface
+* Secure authentication system
+* Product catalogue management
+* Category-based product browsing
+* Shopping cart functionality
+* Checkout and order processing
+* Customer order tracking
+* Admin product management
+* Admin order management
 
-The project follows a modern frontend and backend architecture using Laravel REST APIs with a React-based user interface.
+The project follows a modern client-server architecture using:
+
+```
+React.js Frontend
+        |
+        |
+Laravel REST API
+        |
+        |
+MySQL Database
+```
 
 ---
 
@@ -28,51 +40,51 @@ The project follows a modern frontend and backend architecture using Laravel RES
 
 ## 👤 Customer Features
 
-✅ Customer Registration  
-✅ Customer Login / Logout  
-✅ Secure Token Authentication  
-✅ Browse Fashion Products  
-✅ Product Details View  
-✅ Add Products to Cart  
-✅ Update Cart Quantity  
-✅ Remove Cart Items  
-✅ Checkout System  
-✅ Cash on Delivery  
-✅ Order Confirmation Email  
-✅ View Personal Orders  
-✅ Track Order Status  
+✅ Customer Registration
+✅ Customer Login / Logout
+✅ Secure Token Authentication
+✅ Browse Fashion Products
+✅ View Product Details
+✅ Category-Based Product Filtering
+✅ Add Products to Cart
+✅ Update Cart Quantity
+✅ Remove Cart Items
+✅ Checkout System
+✅ Cash on Delivery
+✅ Order Creation
+✅ View Personal Orders
+✅ Track Order Status
 
 ---
 
-# 👨‍💼 Admin Features
+## 👨‍💼 Admin Features
 
-✅ Separate Admin Authentication  
-✅ Role-Based Access Control  
-✅ Admin Dashboard  
-✅ Add Products  
-✅ Update Products  
-✅ Delete Products  
-✅ Product Image Upload  
-✅ Category Management  
-✅ Stock Management  
-✅ View Customer Orders  
-✅ Update Order Status  
+✅ Separate Admin Authentication
+✅ Role-Based Authorization
+✅ Admin Dashboard
+✅ Add Products
+✅ Update Products
+✅ Delete Products
+✅ Product Image Management
+✅ Category Management
+✅ View Customer Orders
+✅ Update Order Status
 
 ---
 
 # 🏗️ System Architecture
 
 ```
-React Frontend
-       |
-       |
-REST API Communication
-       |
-       |
-Laravel Backend API
-       |
-       |
-MySQL Database
+                 React.js Frontend
+                        |
+                        |
+                 Axios REST API
+                        |
+                        |
+                Laravel Backend API
+                        |
+                        |
+                  MySQL Database
 ```
 
 ---
@@ -81,27 +93,58 @@ MySQL Database
 
 ## Frontend
 
-- React.js
-- Vite
-- JavaScript (ES6+)
-- Axios
-- React Router
-- CSS / Bootstrap
+* React.js
+* Vite
+* JavaScript (ES6+)
+* Axios
+* React Router
+* CSS
+* Bootstrap
 
 ## Backend
 
-- Laravel 12
-- PHP 8+
-- Laravel Sanctum
-- REST API
-- MySQL Database
+* Laravel 12
+* PHP 8+
+* Laravel Sanctum
+* REST API
+* MySQL Database
+* Laravel Eloquent ORM
 
 ## Development Tools
 
-- Visual Studio Code
-- Git & GitHub
-- XAMPP
-- Postman
+* Visual Studio Code
+* Git & GitHub
+* XAMPP
+* Postman
+* Chrome Developer Tools
+
+---
+
+# 🗄️ Database Design
+
+Main database entities:
+
+```
+Users
+ |
+ |--- Products
+ |
+ |--- Orders
+        |
+        |--- Order Items
+```
+
+Database Management System:
+
+```
+MySQL
+```
+
+ORM:
+
+```
+Laravel Eloquent ORM
+```
 
 ---
 
@@ -132,15 +175,17 @@ fashion-ecommerce-platform/
 
 # ⚙️ Installation Guide
 
-## Backend Setup (Laravel)
-
-Clone the repository:
+## Clone Repository
 
 ```bash
 git clone https://github.com/roshanrhn11/fashion-ecommerce-platform.git
 ```
 
-Navigate to backend:
+---
+
+# Backend Setup (Laravel)
+
+Navigate:
 
 ```bash
 cd backend
@@ -164,7 +209,15 @@ Generate application key:
 php artisan key:generate
 ```
 
-Configure your database in `.env`
+Configure MySQL database inside `.env`
+
+Example:
+
+```
+DB_DATABASE=stylecart
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
 Run migrations:
 
@@ -178,7 +231,7 @@ Start Laravel server:
 php artisan serve
 ```
 
-Backend runs:
+Backend URL:
 
 ```
 http://127.0.0.1:8000
@@ -200,13 +253,13 @@ Install packages:
 npm install
 ```
 
-Start React development server:
+Run development server:
 
 ```bash
 npm run dev
 ```
 
-Frontend runs:
+Frontend URL:
 
 ```
 http://localhost:5173
@@ -216,11 +269,11 @@ http://localhost:5173
 
 # 🔐 Authentication System
 
-The application implements secure authentication using:
+StyleCart uses:
 
-- Laravel Sanctum API Tokens
-- Protected API Routes
-- Role-Based Authorization
+* Laravel Sanctum API Token Authentication
+* Protected API Routes
+* Role-Based Authorization
 
 User Roles:
 
@@ -231,71 +284,178 @@ Customer
 Admin
 ```
 
+Authentication Flow:
+
+```
+User Login
+      |
+      |
+Laravel Authentication
+      |
+      |
+Sanctum Token Generated
+      |
+      |
+React Stores Token
+      |
+      |
+Protected API Access
+```
+
+---
+
+# 📡 API Endpoints
+
+## Authentication
+
+| Method | Endpoint        | Description       |
+| ------ | --------------- | ----------------- |
+| POST   | `/api/register` | Register customer |
+| POST   | `/api/login`    | Login user        |
+| POST   | `/api/logout`   | Logout user       |
+
+## Products
+
+| Method | Endpoint                    | Description    |
+| ------ | --------------------------- | -------------- |
+| GET    | `/api/products`             | Get products   |
+| POST   | `/api/products/store`       | Create product |
+| PUT    | `/api/products/{id}/update` | Update product |
+| DELETE | `/api/products/{id}/delete` | Delete product |
+
+## Orders
+
+| Method | Endpoint                        | Description          |
+| ------ | ------------------------------- | -------------------- |
+| POST   | `/api/orders`                   | Create order         |
+| GET    | `/api/my-orders`                | View customer orders |
+| POST   | `/api/admin/orders/{id}/status` | Update order status  |
+
 ---
 
 # 🛒 Order Workflow
 
 ```
-Order Placed
+Customer Selects Product
 
-      ↓
+        ↓
 
-Pending
+Add To Cart
 
-      ↓
+        ↓
 
-Processing
+Checkout
 
-      ↓
+        ↓
 
-Shipped
+Order Created
 
-      ↓
+        ↓
 
-Delivered
+Admin Reviews Order
+
+        ↓
+
+Order Status Updated
+
+        ↓
+
+Customer Tracks Order
 ```
-
-Customers can view their own order history while administrators can manage order status.
 
 ---
 
 # 📸 Screenshots
 
-Screenshots will be added here:
+Add screenshots inside:
 
-- Home Page
-- Product Listing
-- Product Details
-- Shopping Cart
-- Checkout
-- Customer Orders
-- Admin Dashboard
+```
+docs/screenshots/
+```
+
+Recommended screenshots:
+
+* Home Page
+* Product Collection
+* Product Details
+* Shopping Cart
+* Checkout Page
+* Customer Orders
+* Admin Dashboard
+
+Example:
+
+```md
+![Home Page](docs/screenshots/home.png)
+```
 
 ---
 
-# 🔮 Future Improvements
+# 🔮 Future Enhancement Proposal
+
+## Version 2.0 Roadmap
+
+## 💳 Online Payment Integration
 
 Planned improvements:
 
-- Online Payment Gateway
-- Wishlist System
-- Product Reviews & Ratings
-- Advanced Search
-- Product Recommendation System
-- Docker Deployment
-- Cloud Hosting
-- Automated Testing
+* PayHere / Stripe integration
+* Payment verification
+* Digital receipts
+
+## 🤖 AI Product Recommendation System
+
+Future AI features:
+
+* Personalized product recommendations
+* User behaviour analysis
+* Similar product suggestions
+* Trending product prediction
+
+## 📦 Advanced Inventory Management
+
+Planned:
+
+* Real-time stock tracking
+* Low stock notifications
+* Inventory reports
+
+## 📊 Business Analytics Dashboard
+
+Future dashboard:
+
+* Sales analytics
+* Revenue reports
+* Customer statistics
+* Product performance analysis
+
+## ☁️ Cloud Deployment
+
+Future deployment:
+
+* Laravel cloud hosting
+* React deployment
+* Cloud database
+* Cloud image storage
+
+## 📱 Mobile Application
+
+Future:
+
+* Android application
+* Push notifications
+* Mobile shopping experience
 
 ---
 
 # 🧪 Testing
 
-Future QA implementation:
+Future testing improvements:
 
-- API Testing using Postman
-- Unit Testing using PHPUnit
-- End-to-End Testing using Playwright
-- Test Case Documentation
+* API Testing using Postman
+* PHPUnit Testing
+* End-to-End Testing using Playwright
+* Automated Test Cases
 
 ---
 
@@ -303,13 +463,14 @@ Future QA implementation:
 
 Through this project, I gained practical experience in:
 
-- Full Stack Web Development
-- REST API Development
-- Authentication & Authorization
-- Database Design
-- Frontend and Backend Integration
-- Git Workflow
-- Software Testing Concepts
+* Full Stack Web Development
+* REST API Development
+* React and Laravel Integration
+* Authentication and Authorization
+* Database Design
+* Git Workflow
+* Software Testing Concepts
+* E-Commerce System Development
 
 ---
 
@@ -320,6 +481,7 @@ Through this project, I gained practical experience in:
 Software Engineering Student
 
 GitHub:
+
 https://github.com/roshanrhn11
 
 ---
