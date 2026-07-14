@@ -1,0 +1,37 @@
+services:
+
+  app:
+    build:
+      context: .
+    container_name: stylecart_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_DATABASE: clothing_shop
+      DB_USERNAME: root
+      DB_PASSWORD: password
+
+
+  mysql:
+    image: mysql:8
+    container_name: stylecart_mysql
+    restart: always
+
+    environment:
+      MYSQL_DATABASE: stylecart
+      MYSQL_ROOT_PASSWORD: password
+
+    ports:
+      - "3307:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+
+volumes:
+  mysql_data:
