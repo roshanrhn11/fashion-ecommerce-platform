@@ -54,44 +54,33 @@ class OrderController extends Controller
 
 
 
+$order = Order::create([
 
-        $order = Order::create([
+    'user_id'=>$userId,
 
+    'customer_name'=>$request->customer_name,
 
-            'user_id'=>$userId,
+    'phone'=>$request->phone,
 
-            'customer_name'=>$request->customer_name,
+    'email'=>$request->email,
 
-            'phone'=>$request->phone,
+    'address'=>$request->address,
 
-            'email'=>$request->email,
+    'items'=>$request->items,
 
-            'address'=>$request->address,
+    'total'=>$request->total,
 
-            'items'=>$request->items,
+    'payment_method'=>
+        $request->payment_method ?? 
+        'Cash on Delivery',
 
-            'total'=>$request->total,
+    'status'=>'Pending',
 
-            'payment_method'=>
-                $request->payment_method ?? 
-                'Cash on Delivery',
-
-            'status'=>'Pending',
-
-        ]);
+]);
 
 
-
-
-
-        if($order->email){
-
-            Mail::to($order->email)
-            ->send(
-                new OrderConfirmation($order)
-            );
-
-        }
+// Email temporarily disabled
+// Add Laravel Queue email after order system is completed
 
 
 
