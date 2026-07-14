@@ -836,3 +836,10 @@ Route::post('/my-orders/{id}/cancel', function($id){
 
 
 });
+
+Route::get('/healthz', function () {
+    return response()->json([
+        'status' => 'ok',
+        'app' => 'StyleCart API'
+    ]);
+});
