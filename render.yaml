@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: stylecart-backend
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_ENV
+        value: production
+
+      - key: APP_KEY
+        sync: false
+
+      - key: DB_CONNECTION
+        value: mysql
+
+      - key: DB_HOST
+        value: mysql-a8ee324-stylecart-production.h.aivencloud.com
+
+      - key: DB_PORT
+        value: 25150
+
+      - key: DB_DATABASE
+        value: defaultdb
+
+      - key: DB_USERNAME
+        value: avnadmin
+
+      - key: DB_PASSWORD
+        sync: false
