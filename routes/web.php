@@ -837,6 +837,17 @@ Route::post('/my-orders/{id}/cancel', function($id){
 
 });
 
+// 1. மெயின் ரூட் (https://fashion-ecommerce-platform-yc65.onrender.com/)
+Route::get('/', function () {
+    return response()->json([
+        'status' => 'online',
+        'app' => 'StyleCart API Production',
+        'version' => '1.0.0',
+        'message' => 'Welcome to StyleCart Backend API'
+    ]);
+});
+
+// 2. உங்களுடைய பழைய ஹெல்த் செக் ரூட் (பேக்கப்)
 Route::get('/healthz', function () {
     return response()->json([
         'status' => 'ok',
