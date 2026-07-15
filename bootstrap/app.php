@@ -12,7 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Render லோடு பேலன்ஸர் டிராஃபிக்கை அனுமதிக்கிறது
+        $middleware->trustProxies(at: '*'); 
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
