@@ -35,4 +35,6 @@ RUN chmod -R 775 storage bootstrap/cache
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 EXPOSE 80
-CMD ["apache2-foreground"]
+
+# அசல் மாற்றம்: சர்வர் தொடங்கும் முன் மைக்ரேஷனை ஓட்டி, கேச்சை கிளியர் செய்ய வைக்கும் கட்டளை
+CMD sh -c "php artisan migrate --force && php artisan config:clear && apache2-foreground"
