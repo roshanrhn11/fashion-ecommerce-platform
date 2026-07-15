@@ -18,6 +18,9 @@ RUN apt-get update && apt-get install -y \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
 
+# இந்த புதிய வரியை மிகச் சரியாக இங்கே சேர்க்கவும்
+RUN docker-php-ext-enable pdo_pgsql pgsql
+
 # Apache கான்ஃபிகரேஷன்
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
@@ -36,5 +39,4 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 
 EXPOSE 80
 
-# அசல் மாற்றம்: சர்வர் தொடங்கும் முன் மைக்ரேஷனை ஓட்டி, கேச்சை கிளியர் செய்ய வைக்கும் கட்டளை
 CMD sh -c "php artisan migrate --force && php artisan config:clear && apache2-foreground"
