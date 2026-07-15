@@ -1,8 +1,9 @@
 FROM php:8.3-apache
 
-# தேவையான Extensions மற்றும் டூல்ஸ்களை இன்ஸ்டால் செய்தல்
+# PostgreSQL-க்கான libpq-dev மற்றும் தேவையான டூல்ஸ்களை இன்ஸ்டால் செய்கிறோம்
 RUN apt-get update && apt-get install -y \
     unzip git curl libzip-dev libpq-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pdo pdo_pgsql pdo_mysql zip \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
@@ -12,7 +13,7 @@ ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 
-# Apache-ஐ அதன் டிஃபால்ட் போர்ட் 80-லேயே இயங்க வைக்கிறோம் (குழப்பங்களைத் தவிர்க்க)
+# Apache-ஐ அதன் டிஃபால்ட் போர்ட் 80-லேயே இயங்க வைக்கிறோம்
 RUN sed -i 's/Listen .*/Listen 80/g' /etc/apache2/ports.conf
 RUN sed -i 's/<VirtualHost \*:.*/<VirtualHost \*:80>/g' /etc/apache2/sites-available/*.conf
 
