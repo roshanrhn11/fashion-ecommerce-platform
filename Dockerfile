@@ -1,6 +1,6 @@
 FROM php:8.3-apache
 
-# Apache configurations-ஐ மாற்றுதல் மற்றும் தேவையான Extensions இன்ஸ்டால் செய்தல்
+# தேவையான Extensions மற்றும் டூல்ஸ்களை இன்ஸ்டால் செய்தல்
 RUN apt-get update && apt-get install -y \
     unzip git curl libzip-dev libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql pdo_mysql zip \
@@ -12,18 +12,20 @@ ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 
-# Apache போர்ட்டை Render கொடுக்கும் $PORT-க்கு டைனமிக்காக மாற்றுதல்
-RUN sed -i 's/Listen 80/Listen ${PORT}/g' /etc/apache2/ports.conf
-RUN sed -i 's/<VirtualHost \*:80>/<VirtualHost \*:${PORT}>/g' /etc/apache2/sites-available/*.conf
+# Apache-ஐ அதன் டிஃபால்ட் போர்ட் 80-லேயே இயங்க வைக்கிறோம் (குழப்பங்களைத் தவிர்க்க)
+RUN sed -i 's/Listen .*/Listen 80/g' /etc/apache2/ports.conf
+RUN sed -i 's/<VirtualHost \*:.*/<VirtualHost \*:80>/g' /etc/apache2/sites-available/*.conf
 
 WORKDIR /var/www/html
 COPY . .
 
+# Composer இன்ஸ்டால் செய்தல்
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-dev --optimize-autoloader
 
+# லாராவெல் ஃபோல்டர் பெர்மிஷன்களைச் சரிசெய்தல்
 RUN chmod -R 775 storage bootstrap/cache
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Apache சர்வரை ஃபோர்கிரவுண்டில் இயக்குகிறோம்
+EXPOSE 80
 CMD ["apache2-foreground"]
