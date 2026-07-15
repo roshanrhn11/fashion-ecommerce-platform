@@ -84,21 +84,21 @@ return [
             ]) : [],
         ],
 
-        'pgsql' => [
+'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DB_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'laravel'),
-            'username' => env('DB_USERNAME', 'root'),
+            'port' => env('DB_PORT', '25150'),
+            'database' => env('DB_DATABASE', 'defaultdb'), // 'laravel' ஐ மாற்றி 'defaultdb' என மாற்றவும்
+            'username' => env('DB_USERNAME', 'avnadmin'),  // 'root' ஐ மாற்றி 'avnadmin' என மாற்றவும்
             'password' => env('DB_PASSWORD', ''),
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => '',
             'prefix_indexes' => true,
             'search_path' => 'public',
-            'sslmode' => env('DB_SSLMODE', 'prefer'),
+            'sslmode' => env('DB_SSLMODE', 'require'), // Aiven PostgreSQL-க்கு 'require' என்பது கட்டாயம்
         ],
-
+        
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DB_URL'),
