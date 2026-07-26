@@ -11,21 +11,16 @@ class OrderConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
-
     public $order;
-
 
     public function __construct(Order $order)
     {
         $this->order = $order;
     }
 
-
-
     public function build()
     {
-        return $this
-            ->subject('Order Confirmation - Clothing Shop')
-            ->view('emails.order_confirmation');
+        return $this->subject('Order Confirmation - StyleCart')
+                    ->view('emails.order_confirmation');
     }
 }

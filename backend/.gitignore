@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *.log
 .DS_Store
 .env
@@ -22,3 +23,28 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+=======
+# Laravel
+backend/vendor/
+backend/.env
+backend/.env.*
+backend/storage/logs/*
+backend/bootstrap/cache/*
+
+# React
+frontend/node_modules/
+frontend/.env
+frontend/.env.*
+frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+>>>>>>> 7a64c58f54bcac98a9e9ae71162c66a37b8135fb

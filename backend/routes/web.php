@@ -836,3 +836,29 @@ Route::post('/my-orders/{id}/cancel', function($id){
 
 
 });
+
+
+
+// 2. உங்களுடைய பழைய ஹெல்த் செக் ரூட் (பேக்கப்)
+Route::get('/healthz', function () {
+    return response()->json([
+        'status' => 'ok',
+        'app' => 'StyleCart API'
+    ]);
+});
+
+
+
+// தற்காலிகமாக டேட்டாபேஸ் டிராபிக் இல்லாமல் வெறும் JSON மட்டும் ரிட்டன் செய்கிறோம்
+Route::get('/', function () {
+    return response()->json([
+        'status' => 'online',
+        'app' => 'StyleCart API Production',
+        'version' => '1.0.0',
+        'message' => 'Backend is working perfectly with Docker!'
+    ]);
+});
+
+Route::get('/up', function () {
+    return response('Application up', 200);
+});

@@ -16,6 +16,7 @@ use App\Http\Controllers\API\OrderController;
 |--------------------------------------------------------------------------
 */
 
+
 Route::get('/products', [ProductController::class, 'index']);
 
 Route::post('/products/store', [ProductController::class, 'store']);
@@ -233,4 +234,12 @@ Route::middleware('auth:sanctum')->group(function(){
 
 
 
+});
+
+
+Route::get('/healthz', function () {
+    return response()->json([
+        'status' => 'ok',
+        'app' => 'StyleCart API'
+    ]);
 });
